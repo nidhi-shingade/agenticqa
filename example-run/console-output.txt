@@ -1,0 +1,72 @@
+# SIMULATED OUTPUT. Illustrative only; not from a real run.
+# Three suites were run in sequence for the same ticket. Smoke ran first and passed.
+
+$ AGENTICQA_TICKET=EXAMPLE-101 QA_BASE_URL=https://staging.example.com npm run test:smoke
+
+> agenticqa@0.1.0 test:smoke
+> playwright test --grep @smoke
+
+Running 4 tests using 2 workers
+
+  ✓  1 [desktop] › tests/agenticqa/EXAMPLE-101/AC-1.forgot-password-link.spec.ts:6:7 › AC-1 › @smoke AC-1 forgot-password link opens reset form (3.4s)
+  ✓  2 [desktop] › tests/agenticqa/EXAMPLE-101/AC-1.reset-form-fields.spec.ts:6:7 › AC-1 › @smoke AC-1 reset form shows email field (2.9s)
+  ✘  3 [mobile] › tests/agenticqa/EXAMPLE-101/AC-1.forgot-password-link.spec.ts:6:7 › AC-1 › @smoke AC-1 forgot-password link opens reset form (retry #1) (4.1s)
+  ✓  3 [mobile] › tests/agenticqa/EXAMPLE-101/AC-1.forgot-password-link.spec.ts:6:7 › AC-1 › @smoke AC-1 forgot-password link opens reset form (retry #2) (3.8s)
+  ✓  4 [mobile] › tests/agenticqa/EXAMPLE-101/AC-1.reset-form-fields.spec.ts:6:7 › AC-1 › @smoke AC-1 reset form shows email field (3.0s)
+
+  3 passed (9.6s)
+  1 flaky
+    [mobile] › tests/agenticqa/EXAMPLE-101/AC-1.forgot-password-link.spec.ts:6:7 › AC-1 › @smoke AC-1 forgot-password link opens reset form
+
+$ AGENTICQA_TICKET=EXAMPLE-101 QA_BASE_URL=https://staging.example.com npm run test:regression
+
+> agenticqa@0.1.0 test:regression
+> playwright test --grep @regression
+
+Running 3 tests using 2 workers
+
+  ✘  1 [desktop] › tests/agenticqa/EXAMPLE-101/AC-2.reset-email-timing.spec.ts:8:7 › AC-2 › @regression AC-2 reset email arrives within 120 seconds (retry #2) (10.0s)
+  -  2 [desktop] › tests/agenticqa/EXAMPLE-101/AC-4.reset-link-expiry.spec.ts:8:7 › AC-4 › @regression AC-4 reset link expires after 24 hours
+  -  3 [mobile] › tests/agenticqa/EXAMPLE-101/AC-4.reset-link-expiry.spec.ts:8:7 › AC-4 › @regression AC-4 reset link expires after 24 hours
+
+  1) [desktop] › tests/agenticqa/EXAMPLE-101/AC-2.reset-email-timing.spec.ts:8:7 › AC-2 › @regression AC-2 reset email arrives within 120 seconds
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 120
+    Received:    164
+
+      21 |     const elapsedSeconds = (received - sentAt) / 1000;
+    > 22 |     expect(elapsedSeconds).toBeLessThanOrEqual(120);
+         |                            ^
+
+    Screenshot: reports/EXAMPLE-101/playwright/test-results/AC-2-reset-email-timing-desktop/test-failed-1.png
+
+  Skipped: AC-4 reset link expires after 24 hours (desktop, mobile)
+    Reason: reset link expiry requires access to the test mailbox, which is not configured for this environment.
+    Recorded as: Not able to verify
+
+  1 failed
+    [desktop] › tests/agenticqa/EXAMPLE-101/AC-2.reset-email-timing.spec.ts:8:7 › AC-2 › @regression AC-2 reset email arrives within 120 seconds
+  2 skipped
+
+$ AGENTICQA_TICKET=EXAMPLE-101 QA_BASE_URL=https://staging.example.com npm run test:a11y
+
+> agenticqa@0.1.0 test:a11y
+> playwright test --grep @a11y
+
+Running 2 tests using 2 workers
+
+  ✓  1 [desktop] › tests/agenticqa/EXAMPLE-101/AC-3.reset-form-keyboard.spec.ts:7:7 › AC-3 › @a11y AC-3 reset form has no WCAG 2.2 AA violations (5.2s)
+  ✘  2 [mobile] › tests/agenticqa/EXAMPLE-101/AC-3.reset-form-keyboard.spec.ts:7:7 › AC-3 › @a11y AC-3 reset form has no WCAG 2.2 AA violations (6.0s)
+
+  1) [mobile] › tests/agenticqa/EXAMPLE-101/AC-3.reset-form-keyboard.spec.ts:7:7 › AC-3 › @a11y AC-3 reset form has no WCAG 2.2 AA violations
+
+    Error: Accessibility violations found (WCAG 2.2 AA):
+    - [serious] color-contrast: Elements must meet minimum color contrast ratio thresholds (1 element(s)) https://dequeuniversity.com/rules/axe/4.10/color-contrast
+
+  1 passed (5.2s)
+  1 failed
+
+To open the HTML report: npm run test:report  (or open reports/EXAMPLE-101/playwright/index.html)
+Dynatrace query window: 2025-06-01T10:00:00Z to 2025-06-01T10:42:00Z (aggregated, no raw session data stored)

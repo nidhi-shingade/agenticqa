@@ -15,6 +15,10 @@ One command runs the full pass on an isolated branch: it reads the ticket, decom
 | 4. Report | Per-AC verdict (Pass, Fail, Not able to verify) with evidence and Dynatrace correlation. |
 | 5. Draft comment | Writes a DRAFT Jira or Azure DevOps comment. A person reviews and posts it. |
 
+## Example run
+
+[example-run/](example-run/) shows what a simulated `/agenticqa` run produces: terminal output, a full report, and a draft ticket comment. All values are invented. Read it before reviewing a real run.
+
 ## Repository layout
 
 ```
